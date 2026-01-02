@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Vamsi Vault</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- ADMIN HEADER -->
+    <div class="admin-header">
+        <h1>🏢 Vamsi Vault - Admin Dashboard</h1>
+        <div>
+            <a href="index.html" style="color: var(--text-light); text-decoration: none; margin-right: 2rem; font-weight: 500;">← Back to Website</a>
+            <button style="background-color: var(--secondary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- ADMIN CONTAINER -->
+    <div class="admin-container">
+        <!-- STATISTICS SECTION -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalBookingsValue">0</div>
+                <div class="stat-label">Total Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingBookingsValue">0</div>
+                <div class="stat-label">Pending Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completedBookingsValue">0</div>
+                <div class="stat-label">Completed Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalRevenueValue">$0</div>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="admin-tabs">
+            <button class="tab-btn">📋 All Bookings</button>
+            <button class="tab-btn">🛠️ Manage Services</button>
+            <button class="tab-btn">👥 Customers</button>
+            <button class="tab-btn">⚙️ Settings</button>
+        </div>
+
+        <!-- TAB CONTENT -->
+
+        <!-- BOOKINGS TAB -->
+        <div class="tab-content">
+            <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="color: var(--primary-color);">Booking Management</h2>
+                <button onclick="exportBookings()" style="background-color: var(--secondary-color); color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📥 Export as CSV</button>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Customer Name</th>
+                            <th>Service</th>
+                            <th>Date & Time</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsBody">
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: #999;">No bookings yet</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SERVICES TAB -->
+        <div class="tab-content">
+            <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="color: var(--primary-color);">Service Management</h2>
+                <button onclick="openAddServiceModal()" style="background-color: var(--secondary-color); color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">+ Add New Service</button>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service ID</th>
+                            <th>Service Name</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servicesBody">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #999;">Loading services...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CUSTOMERS TAB -->
+        <div class="tab-content">
+            <div style="margin-bottom: 2rem;">
+                <h2 style="color: var(--primary-color);">Customer List</h2>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>City</th>
+                            <th>Bookings</th>
+                            <th>Total Spent</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: #999;">No customers yet</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SETTINGS TAB -->
+        <div class="tab-content">
+            <div style="max-width: 800px;">
+                <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Settings</h2>
+
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Business Information</h3>
+                    
+                    <div class="form-group">
+                        <label>Business Name</label>
+                        <input type="text" value="Vamsi Vault" style="padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 6px; width: 100%; font-family: inherit;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" value="gummu.369@gmail.com" style="padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 6px; width: 100%; font-family: inherit;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" value="+91 9133813168" style="padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 6px; width: 100%; font-family: inherit;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Business Address</label>
+                        <textarea style="padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 6px; width: 100%; font-family: inherit; resize: vertical;" rows="3">123 Urban Street, City, State 12345</textarea>
+                    </div>
+
+                    <button style="background-color: var(--secondary-color); color: white; padding: 0.8rem 2rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Save Changes</button>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Notification Settings</h3>
+                    
+                    <label style="display: flex; align-items: center; margin-bottom: 1rem; cursor: pointer;">
+                        <input type="checkbox" checked style="width: auto; margin-right: 0.5rem;">
+                        <span>Email notifications for new bookings</span>
+                    </label>
+
+                    <label style="display: flex; align-items: center; margin-bottom: 1rem; cursor: pointer;">
+                        <input type="checkbox" checked style="width: auto; margin-right: 0.5rem;">
+                        <span>SMS notifications for service completion</span>
+                    </label>
+
+                    <label style="display: flex; align-items: center; margin-bottom: 1rem; cursor: pointer;">
+                        <input type="checkbox" checked style="width: auto; margin-right: 0.5rem;">
+                        <span>Weekly sales report</span>
+                    </label>
+
+                    <label style="display: flex; align-items: center; cursor: pointer;">
+                        <input type="checkbox" style="width: auto; margin-right: 0.5rem;">
+                        <span>Customer feedback alerts</span>
+                    </label>
+                </div>
+
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); border: 2px solid #fee;">
+                    <h3 style="margin-bottom: 1rem; color: #d32f2f;">Danger Zone</h3>
+                    
+                    <p style="color: #666; margin-bottom: 1rem;">Clearing data is irreversible. Please proceed with caution.</p>
+
+                    <button onclick="clearAllData()" style="background-color: #d32f2f; color: white; padding: 0.8rem 2rem; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div id="addServiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Service</h2>
+                <button class="close-btn" onclick="closeAddServiceModal()">&times;</button>
+            </div>
+            <form onsubmit="handleAddService(event)">
+                <div class="form-group">
+                    <label for="serviceName">Service Name</label>
+                    <input type="text" id="serviceName" required style="padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 6px; width: 100%; font-family: inherit;">
+                </div>
+                <div class="form-group">
+                    <label for="servicePrice">Price</label>
+                    <input type="number" id="servicePrice" required step="0.01" style="padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 6px; width: 100%; font-family: inherit;">
+                </div>
+                <button type="submit" class="submit-btn">Add Service</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Tab button class name fix
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.add('admin-tabs');
+            btn.classList.remove('tab-btn');
+        });
+
+        // Admin-specific functions
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        function exportBookings() {
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            if (bookings.length === 0) {
+                alert('No bookings to export');
+                return;
+            }
+
+            let csv = 'Booking ID,Name,Service,Date,Time,Amount,Status,Email,Phone,Address\n';
+            bookings.forEach(b => {
+                const price = (window.servicePrices && window.servicePrices[b.service]) || 0;
+                csv += `"${b.bookingRef}","${b.firstName} ${b.lastName}","${b.service}","${b.date}","${b.time}","$${price}","${b.status}","${b.email}","${b.phone}","${b.address}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'urban-vault-bookings-' + new Date().toISOString().split('T')[0] + '.csv';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        function openAddServiceModal() {
+            document.getElementById('addServiceModal').classList.add('active');
+        }
+
+        function closeAddServiceModal() {
+            document.getElementById('addServiceModal').classList.remove('active');
+            document.getElementById('serviceName').value = '';
+            document.getElementById('servicePrice').value = '';
+        }
+
+        function handleAddService(e) {
+            e.preventDefault();
+            const name = document.getElementById('serviceName').value;
+            const price = parseInt(document.getElementById('servicePrice').value);
+            
+            const serviceId = name.toLowerCase().replace(/\s+/g, '-');
+            window.servicePrices[serviceId] = price;
+            
+            localStorage.setItem('servicePrices', JSON.stringify(window.servicePrices));
+            closeAddServiceModal();
+            displayServices();
+            alert('Service added successfully!');
+        }
+
+        // Display customers
+        function displayCustomers() {
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            const customersMap = {};
+
+            bookings.forEach(booking => {
+                const key = booking.email;
+                if (!customersMap[key]) {
+                    customersMap[key] = {
+                        name: booking.firstName + ' ' + booking.lastName,
+                        email: booking.email,
+                        phone: booking.phone,
+                        city: booking.city,
+                        bookingCount: 0,
+                        totalSpent: 0
+                    };
+                }
+                customersMap[key].bookingCount++;
+                const price = window.servicePrices[booking.service] || 0;
+                customersMap[key].totalSpent += price;
+            });
+
+            const customersBody = document.getElementById('customersBody');
+            if (!customersBody) return;
+
+            const customers = Object.values(customersMap);
+            if (customers.length === 0) {
+                customersBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">No customers yet</td></tr>';
+                return;
+            }
+
+            customersBody.innerHTML = customers.map(customer => `
+                <tr>
+                    <td>${customer.name}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.phone}</td>
+                    <td>${customer.city}</td>
+                    <td>${customer.bookingCount}</td>
+                    <td>$${customer.totalSpent.toFixed(2)}</td>
+                </tr>
+            `).join('');
+        }
+
+        function clearAllData() {
+            if (confirm('Are you absolutely sure? This will delete all bookings and cannot be undone!')) {
+                if (confirm('Type "YES" to confirm deletion. Click Cancel to cancel.')) {
+                    localStorage.removeItem('bookings');
+                    displayBookings();
+                    updateAdminStats();
+                    displayCustomers();
+                    alert('All data has been cleared!');
+                }
+            }
+        }
+
+        // Initial load
+        window.addEventListener('load', () => {
+            displayCustomers();
+            
+            // Re-display customers when data changes
+            const observer = new MutationObserver(() => {
+                displayCustomers();
+            });
+            observer.observe(document.body, { subtree: true, childList: true });
+        });
+    </script>
+</body>
+</html>

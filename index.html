@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vamsi Vault - Home Services Booking</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- HEADER & NAVIGATION -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                🏢 <span>VAMSI</span> VAULT
+            </div>
+            <nav id="navbar">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="booking.html">Book Service</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your <span>Urban</span> Home Care Solution</h1>
+            <p>Professional home cleaning, laundry, and deep cleaning services at your doorstep. Fast, reliable, and affordable.</p>
+            <a href="booking.html" class="cta-button">Book Now</a>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features">
+        <div class="features-container">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Quick Booking</h3>
+                <p>Schedule your service in just a few clicks. Instant confirmation and professional service.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Trusted & Verified</h3>
+                <p>All our service professionals are vetted, insured, and background-checked for your safety.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Transparent Pricing</h3>
+                <p>No hidden charges. Clear pricing upfront with competitive rates for all services.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📞</div>
+                <h3>24/7 Support</h3>
+                <p>Round-the-clock customer support to assist you anytime, anywhere.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES PREVIEW -->
+    <section class="services">
+        <h2 class="section-title">Our <span style="color: var(--secondary-color);">Services</span></h2>
+        <p class="section-subtitle">Choose from our range of professional home services</p>
+        <div class="services-container">
+            <!-- Service Card 1 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🏠</div>
+                    <h3>House Cleaning</h3>
+                    <div class="service-price">₹49</div>
+                </div>
+                <div class="service-body">
+                    <p>Complete home cleaning service with professional-grade equipment.</p>
+                    <ul class="service-features">
+                        <li>Dusting & vacuuming</li>
+                        <li>Kitchen & bathroom cleaning</li>
+                        <li>Floor mopping</li>
+                        <li>2-3 hours service</li>
+                    </ul>
+                </div>
+                <div class="service-footer">
+                    <button class="btn-book" onclick="window.location.href='booking.html?service=house-cleaning'">Book Now</button>
+                    <button class="btn-details">View Details</button>
+                </div>
+            </div>
+
+            <!-- Service Card 2 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">👕</div>
+                    <h3>Laundry Service</h3>
+                    <div class="service-price">₹29</div>
+                </div>
+                <div class="service-body">
+                    <p>Professional laundry and washing service for all fabric types.</p>
+                    <ul class="service-features">
+                        <li>Pickup & delivery</li>
+                        <li>Gentle wash & dry</li>
+                        <li>Ironing & folding</li>
+                        <li>Quick turnaround</li>
+                    </ul>
+                </div>
+                <div class="service-footer">
+                    <button class="btn-book" onclick="window.location.href='booking.html?service=laundry'">Book Now</button>
+                    <button class="btn-details">View Details</button>
+                </div>
+            </div>
+
+            <!-- Service Card 3 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">✨</div>
+                    <h3>Deep Cleaning</h3>
+                    <div class="service-price">₹89</div>
+                </div>
+                <div class="service-body">
+                    <p>Comprehensive deep cleaning for every corner of your home.</p>
+                    <ul class="service-features">
+                        <li>Carpet cleaning</li>
+                        <li>Wall & window cleaning</li>
+                        <li>Deep disinfection</li>
+                        <li>4-5 hours service</li>
+                    </ul>
+                </div>
+                <div class="service-footer">
+                    <button class="btn-book" onclick="window.location.href='booking.html?service=deep-cleaning'">Book Now</button>
+                    <button class="btn-details">View Details</button>
+                </div>
+            </div>
+
+            <!-- Service Card 4 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🧹</div>
+                    <h3>Maintenance Cleaning</h3>
+                    <div class="service-price">₹39</div>
+                </div>
+                <div class="service-body">
+                    <p>Regular maintenance cleaning to keep your home fresh and tidy.</p>
+                    <ul class="service-features">
+                        <li>Weekly/Bi-weekly plans</li>
+                        <li>Flexible scheduling</li>
+                        <li>Standard cleaning</li>
+                        <li>Discounted rates</li>
+                    </ul>
+                </div>
+                <div class="service-footer">
+                    <button class="btn-book" onclick="window.location.href='booking.html?service=maintenance'">Book Now</button>
+                    <button class="btn-details">View Details</button>
+                </div>
+            </div>
+
+            <!-- Service Card 5 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🍳</div>
+                    <h3>Kitchen Deep Clean</h3>
+                    <div class="service-price">₹59</div>
+                </div>
+                <div class="service-body">
+                    <p>Specialized deep cleaning for kitchens, including appliances.</p>
+                    <ul class="service-features">
+                        <li>Appliance cleaning</li>
+                        <li>Grease removal</li>
+                        <li>Cabinet cleaning</li>
+                        <li>Food-safe chemicals</li>
+                    </ul>
+                </div>
+                <div class="service-footer">
+                    <button class="btn-book" onclick="window.location.href='booking.html?service=kitchen'">Book Now</button>
+                    <button class="btn-details">View Details</button>
+                </div>
+            </div>
+
+            <!-- Service Card 6 -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon">🚿</div>
+                    <h3>Bathroom Deep Clean</h3>
+                    <div class="service-price">₹49</div>
+                </div>
+                <div class="service-body">
+                    <p>Professional bathroom cleaning with sanitization.</p>
+                    <ul class="service-features">
+                        <li>Tile & grout cleaning</li>
+                        <li>Disinfection</li>
+                        <li>Mirror & chrome polish</li>
+                        <li>Odor removal</li>
+                    </ul>
+                </div>
+                <div class="service-footer">
+                    <button class="btn-book" onclick="window.location.href='booking.html?service=bathroom'">Book Now</button>
+                    <button class="btn-details">View Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-image">🏢</div>
+            <div class="about-content">
+                <h2>About Vamsi Vault</h2>
+                <p>Vamsi Vault is your trusted partner for professional home services in the city. We understand the busy lifestyle of urban professionals and are committed to providing reliable, high-quality services at affordable prices.</p>
+                <p>With years of experience and thousands of satisfied customers, our team of vetted professionals ensures your home receives the care it deserves. We use eco-friendly products and modern techniques to deliver exceptional results.</p>
+                <p>From routine cleaning to specialized deep cleaning, Vamsi Vault is here to make your life easier.</p>
+                <a href="services.html" class="cta-button">Explore All Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <h2 class="section-title">Get in <span style="color: var(--secondary-color);">Touch</span></h2>
+            <p class="section-subtitle">We're here to help. Reach out to us anytime.</p>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="feature-icon">📞</div>
+                    <h3>Call Us</h3>
+                    <p>+91 9133813168</p>
+                </div>
+                <div class="contact-card">
+                    <div class="feature-icon">✉️</div>
+                    <h3>Email</h3>
+                    <p>gummu.369@gmail.com</p>
+                </div>
+                <div class="contact-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>Address</h3>
+                    <p>123 Urban Street, City, State 12345</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Vamsi Vault</h4>
+                <p>Your trusted partner for professional home services in the city.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="booking.html">Book Service</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">House Cleaning</a></li>
+                    <li><a href="#">Laundry Service</a></li>
+                    <li><a href="#">Deep Cleaning</a></li>
+                    <li><a href="#">Kitchen Cleaning</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Vamsi Vault. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

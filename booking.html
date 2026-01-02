@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Service - Vamsi Vault</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- HEADER & NAVIGATION -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                🏢 <span>VAMSI</span> VAULT
+            </div>
+            <nav id="navbar">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="booking.html">Book Service</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Book Your <span>Service</span></h1>
+            <p>Fill in the details below to schedule your home service appointment</p>
+        </div>
+    </section>
+
+    <!-- BOOKING SECTION -->
+    <section class="booking-section">
+        <div class="booking-container">
+            <div class="booking-form">
+                <h2 style="margin-bottom: 2rem; color: var(--primary-color); text-align: center;">Service Booking Form</h2>
+                
+                <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+                    <!-- Service Selection -->
+                    <div class="form-group">
+                        <label for="service">Select Service *</label>
+                        <select id="service" name="service" required>
+                            <option value="">-- Choose a Service --</option>
+                            <option value="house-cleaning">House Cleaning - ₹49</option>
+                            <option value="laundry">Laundry Service - ₹29</option>
+                            <option value="deep-cleaning">Deep Cleaning - ₹89</option>
+                            <option value="maintenance">Maintenance Cleaning - ₹39</option>
+                            <option value="kitchen">Kitchen Deep Clean - ₹59</option>
+                            <option value="bathroom">Bathroom Deep Clean - ₹49</option>
+                            <option value="move-in-out">Move-In/Out Cleaning - ₹99</option>
+                            <option value="post-event">Post-Event Cleaning - ₹79</option>
+                            <option value="window">Window Cleaning - ₹39</option>
+                        </select>
+                    </div>
+
+                    <!-- Service Price Display -->
+                    <div style="background-color: #f0f0f0; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; text-align: center; display: none;" id="priceDisplay">
+                        <p style="margin: 0; color: #666; font-size: 0.9rem;">Service Price: <span id="priceValue" style="font-weight: 700; color: var(--secondary-color);">$0</span></p>
+                    </div>
+
+                    <!-- Date Selection -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Preferred Date *</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+
+                        <!-- Time Selection -->
+                        <div class="form-group">
+                            <label for="time">Preferred Time *</label>
+                            <select id="time" name="time" required>
+                                <option value="">-- Select Time --</option>
+                                <option value="08:00">08:00 AM</option>
+                                <option value="09:00">09:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="13:00">01:00 PM</option>
+                                <option value="14:00">02:00 PM</option>
+                                <option value="15:00">03:00 PM</option>
+                                <option value="16:00">04:00 PM</option>
+                                <option value="17:00">05:00 PM</option>
+                                <option value="18:00">06:00 PM</option>
+                                <option value="19:00">07:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Frequency (for maintenance) -->
+                    <div class="form-group" id="frequencyGroup" style="display: none;">
+                        <label for="frequency">Service Frequency *</label>
+                        <select id="frequency" name="frequency">
+                            <option value="">-- Select Frequency --</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="biweekly">Bi-weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="form-group">
+                        <label for="address">Service Address *</label>
+                        <input type="text" id="address" name="address" placeholder="Enter your full address" required>
+                    </div>
+
+                    <!-- Additional Details -->
+                    <div class="form-group">
+                        <label for="address2">Apartment/Suite Number (Optional)</label>
+                        <input type="text" id="address2" name="address2" placeholder="Apartment, suite, etc.">
+                    </div>
+
+                    <!-- City & Zip -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" placeholder="Your city" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="zip">Zip Code *</label>
+                            <input type="text" id="zip" name="zip" placeholder="12345" required>
+                        </div>
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                        </div>
+                    </div>
+
+                    <!-- Email & Phone -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+                        </div>
+                    </div>
+
+                    <!-- Special Requests -->
+                    <div class="form-group">
+                        <label for="notes">Special Requests or Notes</label>
+                        <textarea id="notes" name="notes" placeholder="Any special instructions or requirements?" rows="4"></textarea>
+                    </div>
+
+                    <!-- Checkbox -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="terms" name="terms" required style="width: auto;">
+                            <span>I agree to the terms and conditions and privacy policy</span>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">Confirm Booking</button>
+
+                    <!-- Reset Button -->
+                    <button type="reset" style="width: 100%; padding: 1rem; background-color: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 0.5rem;">Clear Form</button>
+                </form>
+
+                <!-- Success Message -->
+                <div id="successMessage" style="display: none; background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 6px; margin-top: 1rem; text-align: center;">
+                    <h3>✓ Booking Confirmed!</h3>
+                    <p>Your booking request has been submitted successfully. You will receive a confirmation email shortly.</p>
+                    <p><strong>Booking Reference:</strong> <span id="bookingRef"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INFO SECTION -->
+    <section style="padding: 4rem 2rem; background-color: white;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">How It <span style="color: var(--secondary-color);">Works</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">1️⃣</div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Book Your Service</h3>
+                    <p style="color: #666;">Select your service, date, and time using our easy booking form.</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">2️⃣</div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Get Confirmation</h3>
+                    <p style="color: #666;">Receive instant confirmation via email with all booking details.</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">3️⃣</div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Service Arrives</h3>
+                    <p style="color: #666;">Our professional team arrives on time to provide excellent service.</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">4️⃣</div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Enjoy Results</h3>
+                    <p style="color: #666;">Enjoy a clean, fresh home. Rate and review your experience!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section style="padding: 4rem 2rem; background-color: #f9f9f9;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title">Frequently Asked <span style="color: var(--secondary-color);">Questions</span></h2>
+            
+            <details style="margin-bottom: 1.5rem; padding: 1.5rem; background: white; border-radius: 6px; box-shadow: var(--shadow); cursor: pointer;">
+                <summary style="font-weight: 600; color: var(--primary-color); font-size: 1.1rem;">What happens if I need to reschedule?</summary>
+                <p style="margin-top: 1rem; color: #666;">You can reschedule your booking up to 24 hours before the scheduled service time without any penalty. Simply contact our support team.</p>
+            </details>
+
+            <details style="margin-bottom: 1.5rem; padding: 1.5rem; background: white; border-radius: 6px; box-shadow: var(--shadow); cursor: pointer;">
+                <summary style="font-weight: 600; color: var(--primary-color); font-size: 1.1rem;">Are your cleaning products safe for pets and children?</summary>
+                <p style="margin-top: 1rem; color: #666;">Yes! We use eco-friendly, non-toxic cleaning products that are safe for pets, children, and the environment. All our products are certified and hypoallergenic.</p>
+            </details>
+
+            <details style="margin-bottom: 1.5rem; padding: 1.5rem; background: white; border-radius: 6px; box-shadow: var(--shadow); cursor: pointer;">
+                <summary style="font-weight: 600; color: var(--primary-color); font-size: 1.1rem;">What is your cancellation policy?</summary>
+                <p style="margin-top: 1rem; color: #666;">You can cancel your booking up to 48 hours before the scheduled service for a full refund. Cancellations within 24 hours will incur a 50% service fee.</p>
+            </details>
+
+            <details style="margin-bottom: 1.5rem; padding: 1.5rem; background: white; border-radius: 6px; box-shadow: var(--shadow); cursor: pointer;">
+                <summary style="font-weight: 600; color: var(--primary-color); font-size: 1.1rem;">Do you offer discounts for regular bookings?</summary>
+                <p style="margin-top: 1rem; color: #666;">Absolutely! Our Maintenance Cleaning service offers 10-20% discounts for weekly or bi-weekly bookings. We also offer special rates for first-time customers.</p>
+            </details>
+
+            <details style="margin-bottom: 1.5rem; padding: 1.5rem; background: white; border-radius: 6px; box-shadow: var(--shadow); cursor: pointer;">
+                <summary style="font-weight: 600; color: var(--primary-color); font-size: 1.1rem;">Are your service professionals insured?</summary>
+                <p style="margin-top: 1rem; color: #666;">Yes, all our service professionals are fully insured and bonded. Your home and belongings are completely protected during our service.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Vamsi Vault</h4>
+                <p>Your trusted partner for professional home services in the city.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="booking.html">Book Service</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#">House Cleaning</a></li>
+                    <li><a href="#">Laundry Service</a></li>
+                    <li><a href="#">Deep Cleaning</a></li>
+                    <li><a href="#">Kitchen Cleaning</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Vamsi Vault. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
