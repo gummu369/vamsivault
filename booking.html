@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Service - Vamsi Vault</title>
     <link rel="stylesheet" href="css/styles.css">
-</head>
+    <!-- EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script></head>
 <body>
     <!-- HEADER & NAVIGATION -->
     <header>
@@ -147,7 +148,16 @@
 
                         <div class="form-group">
                             <label for="phone">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+                            <div style="display: grid; grid-template-columns: 60px 1fr; gap: 0.5rem;">
+                                <select id="countryCode" name="countryCode" required style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px; font-weight: 600;">
+                                    <option value="+91" selected>🇮🇳 +91</option>
+                                    <option value="+1">🇺🇸 +1</option>
+                                    <option value="+44">🇬🇧 +44</option>
+                                    <option value="+91">🇮🇳 +91</option>
+                                    <option value="+61">🇦🇺 +61</option>
+                                </select>
+                                <input type="tel" id="phone" name="phone" placeholder="9133813168" required style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px; font-family: Arial, sans-serif;">
+                            </div>
                         </div>
                     </div>
 
@@ -173,10 +183,41 @@
                 </form>
 
                 <!-- Success Message -->
-                <div id="successMessage" style="display: none; background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 6px; margin-top: 1rem; text-align: center;">
-                    <h3>✓ Booking Confirmed!</h3>
-                    <p>Your booking request has been submitted successfully. You will receive a confirmation email shortly.</p>
-                    <p><strong>Booking Reference:</strong> <span id="bookingRef"></span></p>
+                <div id="successMessage" style="display: none; background-color: #d4edda; color: #155724; padding: 2rem; border-radius: 6px; margin-top: 1rem;">
+                    <h3 style="margin-top: 0; text-align: center;">✓ Booking Confirmed!</h3>
+                    <p style="text-align: center; font-weight: bold;">Your booking request has been submitted successfully!</p>
+                    
+                    <p style="background-color: rgba(0,0,0,0.1); padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center;">
+                        <strong>Booking Reference:</strong> <span id="bookingRef" style="font-family: monospace; font-size: 1.1rem;"></span>
+                    </p>
+                    
+                    <!-- Confirmation Checkmarks -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+                        <div style="text-align: center; padding: 1rem; background-color: rgba(0,0,0,0.05); border-radius: 6px;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📧</div>
+                            <div style="font-weight: 600;">Gmail Sent</div>
+                            <div id="emailStatus" style="font-size: 0.9rem; color: #666;">Sending...</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background-color: rgba(0,0,0,0.05); border-radius: 6px;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📱</div>
+                            <div style="font-weight: 600;">WhatsApp Ready</div>
+                            <div style="font-size: 0.9rem; color: #666;">Click button below</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background-color: rgba(0,0,0,0.05); border-radius: 6px;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">✅</div>
+                            <div style="font-weight: 600;">Database Saved</div>
+                            <div style="font-size: 0.9rem; color: #666;">Booking stored</div>
+                        </div>
+                    </div>
+                    
+                    <!-- WhatsApp Button -->
+                    <button id="sendWhatsAppBtn" style="background-color: #25D366; color: white; border: none; padding: 1rem 2rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; margin: 1rem auto; display: block; width: 100%; max-width: 300px;">
+                        📱 Send to WhatsApp (+91 9133813168)
+                    </button>
+                    
+                    <p style="color: #666; font-size: 0.9rem; margin-top: 1rem; text-align: center;">
+                        Thank you for choosing <strong>Vamsi Vault</strong>! 🎉
+                    </p>
                 </div>
             </div>
         </div>

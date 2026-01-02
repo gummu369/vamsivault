@@ -73,12 +73,17 @@ if (bookingForm) {
         serviceSelect.value = serviceParam;
         serviceSelect.dispatchEvent(new Event('change'));
     }
+}
 
-    // Handle form submission
-    window.handleBookingSubmit = function(e) {
-        e.preventDefault();
+// Handle form submission (outside the if block so it's always available)
+window.handleBookingSubmit = function(e) {
+    e.preventDefault();
+    console.log('Form submitted!');
 
+    try {
         // Get form values
+        const countryCode = document.getElementById('countryCode').value;
+        const phoneNumber = document.getElementById('phone').value.replace(/\s/g, '');
         const formData = {
             service: document.getElementById('service').value,
             date: document.getElementById('date').value,
@@ -90,14 +95,17 @@ if (bookingForm) {
             firstName: document.getElementById('firstName').value,
             lastName: document.getElementById('lastName').value,
             email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
+            phone: countryCode + ' ' + phoneNumber,
             notes: document.getElementById('notes').value,
             frequency: document.getElementById('frequency').value || 'N/A'
         };
 
+        console.log('Form data:', formData);
+
         // Validate form
         if (!formData.service || !formData.date || !formData.time || !formData.firstName || !formData.lastName || !formData.email || !formData.phone) {
             alert('Please fill in all required fields');
+            console.log('Validation failed - missing fields');
             return;
         }
 
@@ -108,15 +116,19 @@ if (bookingForm) {
             return;
         }
 
-        // Validate phone format
-        const phoneRegex = /^[\d\s\-\(\)]+$/;
-        if (!phoneRegex.test(formData.phone)) {
-            alert('Please enter a valid phone number');
+        // Validate phone format (10 digits for Indian)
+        const phoneRegex = /^\d{10}$/;
+        if (!phoneRegex.test(phoneNumber)) {
+            alert('Please enter a valid 10-digit phone number');
             return;
         }
 
-        // Generate booking reference
-        const bookingRef = 'UB-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5).toUpperCase();
+        console.log('Validation passed');
+
+        // Generate booking reference (simple format: number + letters)
+        const timestamp = Date.now().toString();
+        const randomStr = Math.random().toString(36).substr(2, 10);
+        const bookingRef = timestamp.substr(-6) + randomStr;
 
         // Save to localStorage for admin panel
         let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
@@ -128,16 +140,22 @@ if (bookingForm) {
         });
         localStorage.setItem('bookings', JSON.stringify(bookings));
 
-        // Hide form and show success message
-        document.querySelector('.booking-form').style.display = 'none';
-        const successMessage = document.getElementById('successMessage');
-        document.getElementById('bookingRef').textContent = bookingRef;
-        successMessage.style.display = 'block';
+        console.log('Booking saved to localStorage');
 
-        // Scroll to success message
-        successMessage.scrollIntoView({ behavior: 'smooth' });
-    };
-}
+        // Send email 
+        sendBookingEmail(formData, bookingRef);
+
+        // Redirect to confirmation page
+        setTimeout(function() {
+            window.location.href = 'confirmation.html?ref=' + bookingRef;
+        }, 1000);
+        
+        console.log('Form processing complete');
+    } catch(error) {
+        console.error('Error in form submission:', error);
+        alert('Error: ' + error.message);
+    }
+};
 
 // ============ ADMIN PAGE FUNCTIONS ============
 
@@ -364,22 +382,206 @@ window.addEventListener('load', () => {
     document.body.style.transition = 'opacity 0.3s ease-in';
 });
 
-// Format phone number as user types
+// Format phone number as user types (Indian format: 10 digits)
 const phoneInput = document.getElementById('phone');
 if (phoneInput) {
     phoneInput.addEventListener('input', function(e) {
         let value = e.target.value.replace(/\D/g, '');
+        // Indian phone numbers are 10 digits
+        if (value.length > 10) {
+            value = value.slice(0, 10);
+        }
         if (value.length > 0) {
-            if (value.length <= 3) {
+            if (value.length <= 5) {
+                // Display as is for first 5 digits
                 value = value;
-            } else if (value.length <= 6) {
-                value = value.slice(0, 3) + '-' + value.slice(3);
+            } else if (value.length <= 8) {
+                // Format: 5 digits - 3 digits
+                value = value.slice(0, 5) + ' ' + value.slice(5);
             } else {
-                value = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6, 10);
+                // Format: 5 digits - 3 digits - 2 digits
+                value = value.slice(0, 5) + ' ' + value.slice(5, 8) + ' ' + value.slice(8);
             }
         }
         e.target.value = value;
     });
 }
 
-console.log('Vamsi Vault - JavaScript loaded successfully');
+// ============ WHATSAPP MESSAGE FUNCTION ============
+window.sendWhatsAppMessage = function(formData, bookingRef) {
+    // Service names mapping
+    const serviceNames = {
+        'house-cleaning': 'House Cleaning',
+        'laundry': 'Laundry Service',
+        'deep-cleaning': 'Deep Cleaning',
+        'maintenance': 'Maintenance Cleaning',
+        'kitchen': 'Kitchen Deep Clean',
+        'bathroom': 'Bathroom Deep Clean',
+        'move-in-out': 'Move-In/Out Cleaning',
+        'post-event': 'Post-Event Cleaning',
+        'window': 'Window Cleaning'
+    };
+
+    // Service pricing
+    const servicePrices = {
+        'house-cleaning': 49,
+        'laundry': 29,
+        'deep-cleaning': 89,
+        'maintenance': 39,
+        'kitchen': 59,
+        'bathroom': 49,
+        'move-in-out': 99,
+        'post-event': 79,
+        'window': 39
+    };
+
+    // Create WhatsApp message with booking details
+    const serviceName = serviceNames[formData.service] || formData.service;
+    const servicePrice = servicePrices[formData.service] || 0;
+    const bookingDate = new Date(formData.date).toLocaleDateString('en-IN', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+
+    const whatsappMessage = `
+*NEW BOOKING - VAMSI VAULT* ✅
+
+🎉 *Booking Confirmed!*
+
+📋 *Booking Details:*
+• Booking ID: ${bookingRef}
+• Service: ${serviceName}
+• Price: ₹${servicePrice}
+• Date: ${bookingDate}
+• Time: ${formData.time}
+• Frequency: ${formData.frequency || 'One-time'}
+
+📍 *Service Address:*
+${formData.address}${formData.address2 ? ', ' + formData.address2 : ''}
+${formData.city}, ${formData.zip}
+
+👤 *Customer Information:*
+• Name: ${formData.firstName} ${formData.lastName}
+• Email: ${formData.email}
+• Phone: ${formData.phone}
+
+📝 *Special Requests:*
+${formData.notes || 'None'}
+
+---
+✓ Your booking has been confirmed!
+✓ You will receive an email confirmation.
+✓ Our team will contact you 24 hours before service.
+
+Thank you for choosing VAMSI VAULT! 🙏
+`.trim();
+
+    // Replace newlines and special characters for URL encoding
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+
+    // Owner's WhatsApp number (your number)
+    const ownerNumber = '919133813168'; // +91 9133813168
+
+    // WhatsApp Click-to-Chat URL
+    const whatsappUrl = `https://wa.me/${ownerNumber}?text=${encodedMessage}`;
+
+    // Open WhatsApp with message
+    window.open(whatsappUrl, '_blank');
+};
+
+// ============ EMAIL SENDING FUNCTION ============
+window.sendBookingEmail = function(formData, bookingRef) {
+    return new Promise(function(resolve, reject) {
+        // Service names mapping
+        const serviceNames = {
+            'house-cleaning': 'House Cleaning',
+            'laundry': 'Laundry Service',
+            'deep-cleaning': 'Deep Cleaning',
+            'maintenance': 'Maintenance Cleaning',
+            'kitchen': 'Kitchen Deep Clean',
+            'bathroom': 'Bathroom Deep Clean',
+            'move-in-out': 'Move-In/Out Cleaning',
+            'post-event': 'Post-Event Cleaning',
+            'window': 'Window Cleaning'
+        };
+
+        // Service pricing
+        const servicePrices = {
+            'house-cleaning': 49,
+            'laundry': 29,
+            'deep-cleaning': 89,
+            'maintenance': 39,
+            'kitchen': 59,
+            'bathroom': 49,
+            'move-in-out': 99,
+            'post-event': 79,
+            'window': 39
+        };
+
+        const serviceName = serviceNames[formData.service] || formData.service;
+        const servicePrice = servicePrices[formData.service] || 0;
+        const bookingDate = new Date(formData.date).toLocaleDateString('en-IN');
+
+        const emailBody = `
+Hello ${formData.firstName},
+
+Thank you for booking with VAMSI VAULT! Your booking has been confirmed.
+
+BOOKING DETAILS:
+Booking Reference: ${bookingRef}
+Service: ${serviceName}
+Price: ₹${servicePrice}
+Date: ${bookingDate}
+Time: ${formData.time}
+
+SERVICE ADDRESS:
+${formData.address}${formData.address2 ? ', ' + formData.address2 : ''}
+${formData.city}, ${formData.zip}
+
+CUSTOMER INFORMATION:
+Name: ${formData.firstName} ${formData.lastName}
+Email: ${formData.email}
+Phone: ${formData.phone}
+
+SPECIAL REQUESTS:
+${formData.notes || 'None'}
+
+Our team will contact you 24 hours before the scheduled service.
+
+Thank you for choosing VAMSI VAULT!
+
+Best regards,
+VAMSI VAULT Team
+Phone: +91 9133813168
+Email: gummu.369@gmail.com
+        `;
+
+        // Send email using FormSubmit service (free, no API key needed)
+        const formData_email = new FormData();
+        formData_email.append('email', formData.email);
+        formData_email.append('name', formData.firstName + ' ' + formData.lastName);
+        formData_email.append('subject', 'Booking Confirmation - ' + bookingRef);
+        formData_email.append('message', emailBody);
+        formData_email.append('_captcha', 'false');
+
+        fetch('https://formspree.io/f/mzbnkydr', {
+            method: 'POST',
+            body: formData_email
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Email sent successfully');
+                resolve(true);
+            } else {
+                console.log('Email sending failed');
+                resolve(false);
+            }
+        })
+        .catch(error => {
+            console.error('Error sending email:', error);
+            resolve(false);
+        });
+    });
+};
