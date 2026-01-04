@@ -6,6 +6,88 @@
     <title>Booking Confirmation - Vamsi Vault</title>
     <link rel="stylesheet" href="css/styles.css">
     <style>
+        /* ========== ANIMATIONS ========== */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.1) translateY(-20px); }
+        }
+
+        @keyframes pop {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInScaleUp {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* ========== PAGE CONTAINER ========== */
+        body {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .confirmation-container {
             max-width: 600px;
             margin: 3rem auto;
@@ -14,42 +96,56 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             text-align: center;
+            animation: slideInUp 0.6s ease-out;
         }
 
+        /* ========== SUCCESS ICON ========== */
         .success-icon {
             font-size: 4rem;
             margin-bottom: 1rem;
-            animation: bounce 0.6s;
+            animation: pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: inline-block;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
+        /* ========== HEADING & TEXT ========== */
         .confirmation-container h1 {
             color: var(--primary-color);
             margin-bottom: 0.5rem;
             font-size: 2.5rem;
+            animation: slideInDown 0.6s ease-out 0.2s both;
         }
 
         .confirmation-container p {
             color: #666;
             margin-bottom: 1.5rem;
             font-size: 1.1rem;
+            animation: slideInDown 0.6s ease-out 0.3s both;
         }
 
+        /* ========== BOOKING REFERENCE ========== */
         .booking-ref {
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #fff8f0 0%, #fffaf5 100%);
             padding: 1.5rem;
             border-radius: 8px;
             margin: 2rem 0;
+            animation: fadeInScaleUp 0.6s ease-out 0.4s both;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .booking-ref:hover {
+            border-color: var(--secondary-color);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.25);
+            background: linear-gradient(135deg, #ffe8d0 0%, #fff0e0 100%);
         }
 
         .booking-ref-label {
             font-size: 0.9rem;
             color: #666;
             margin-bottom: 0.5rem;
+            animation: slideInDown 0.5s ease-out 0.45s both;
         }
 
         .booking-ref-value {
@@ -58,8 +154,26 @@
             font-weight: bold;
             color: var(--secondary-color);
             word-break: break-all;
+            animation: slideInDown 0.5s ease-out 0.5s both;
+            letter-spacing: 1px;
         }
 
+        @keyframes checkmark {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ========== STATUS GRID ========== */
         .status-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -72,11 +186,44 @@
             background-color: #d4edda;
             border-radius: 8px;
             border-left: 4px solid #25D366;
+            animation: slideInUp 0.6s ease-out both;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .status-item:nth-child(1) {
+            animation-delay: 0.55s;
+        }
+
+        .status-item:nth-child(2) {
+            animation-delay: 0.65s;
+        }
+
+        .status-item:nth-child(3) {
+            animation-delay: 0.75s;
+        }
+
+        .status-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(37, 211, 102, 0.2);
         }
 
         .status-item-icon {
             font-size: 2rem;
             margin-bottom: 0.5rem;
+            animation: checkmark 0.6s ease-out forwards;
+        }
+
+        .status-item:nth-child(1) .status-item-icon {
+            animation-delay: 0.6s;
+        }
+
+        .status-item:nth-child(2) .status-item-icon {
+            animation-delay: 0.7s;
+        }
+
+        .status-item:nth-child(3) .status-item-icon {
+            animation-delay: 0.8s;
         }
 
         .status-item-text {
@@ -90,11 +237,13 @@
             color: #666;
         }
 
+        /* ========== ACTION BUTTONS ========== */
         .action-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin: 2rem 0;
+            animation: slideInUp 0.6s ease-out 0.85s both;
         }
 
         .action-btn {
@@ -104,7 +253,27 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .action-btn:active::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-whatsapp {
@@ -114,6 +283,8 @@
 
         .btn-whatsapp:hover {
             background-color: #1eae5b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 211, 102, 0.3);
         }
 
         .btn-home {
@@ -123,6 +294,103 @@
 
         .btn-home:hover {
             background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ========== DETAILS SECTION ========== */
+        .confirmation-details {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: left;
+            margin: 2rem 0;
+            animation: slideInUp 0.6s ease-out 0.6s both;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            animation: slideInUp 0.4s ease-out backwards;
+        }
+
+        .detail-row:nth-child(1) { animation-delay: 0.7s; }
+        .detail-row:nth-child(2) { animation-delay: 0.75s; }
+        .detail-row:nth-child(3) { animation-delay: 0.8s; }
+        .detail-row:nth-child(4) { animation-delay: 0.85s; }
+        .detail-row:nth-child(5) { animation-delay: 0.9s; }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .detail-value {
+            color: #666;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        /* ========== NEXT STEPS ========== */
+        .next-steps {
+            background-color: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 2rem 0;
+            text-align: left;
+            animation: slideInUp 0.6s ease-out 0.8s both;
+        }
+
+        .next-steps h3 {
+            margin-top: 0;
+            color: #1565c0;
+            animation: slideInDown 0.5s ease-out 0.85s both;
+        }
+
+        .next-steps ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .next-steps li {
+            margin-bottom: 0.8rem;
+            color: #333;
+            animation: slideInUp 0.4s ease-out backwards;
+        }
+
+        .next-steps li:nth-child(1) { animation-delay: 0.9s; }
+        .next-steps li:nth-child(2) { animation-delay: 0.95s; }
+        .next-steps li:nth-child(3) { animation-delay: 1s; }
+        .next-steps li:nth-child(4) { animation-delay: 1.05s; }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1eae5b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-home {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-home:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .confirmation-details {
@@ -397,6 +665,35 @@
                         </div>
                     `;
                     document.getElementById('bookingDetails').innerHTML = detailsHTML;
+
+                    // ✅ TRIGGER EMAIL SENDING AFTER PAGE LOADS
+                    setTimeout(() => {
+                        console.log('🚀 Triggering email send from confirmation page...');
+                        
+                        // Send customer confirmation email
+                        try {
+                            sendBookingEmail(currentBooking, bookingRef);
+                            console.log('✅ Customer email triggered');
+                        } catch(e) {
+                            console.error('❌ Failed to send customer email:', e);
+                        }
+
+                        // Send admin notification email
+                        try {
+                            sendAdminNotificationEmail(currentBooking, bookingRef);
+                            console.log('✅ Admin notification triggered');
+                        } catch(e) {
+                            console.error('❌ Failed to send admin notification:', e);
+                        }
+
+                        // Send WhatsApp notification
+                        try {
+                            sendAdminWhatsAppMessage(currentBooking, bookingRef);
+                            console.log('✅ WhatsApp notification triggered');
+                        } catch(e) {
+                            console.error('❌ Failed to send WhatsApp notification:', e);
+                        }
+                    }, 500);
 
                     // WhatsApp button functionality
                     document.getElementById('whatsappBtn').addEventListener('click', function() {
