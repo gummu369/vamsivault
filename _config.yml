@@ -1,0 +1,18 @@
+exclude:
+  - backend/
+  - node_modules/
+  - .env
+  - README.md
+  - DEPLOYMENT.md
+  - QUICKSTART.md
+  - START-HERE.md
+
+include:
+  - admin/
+  - assets/
+  - booking.html
+  - confirmation.html
+  - services.html
+  - index.html
+  - css/
+  - js/
