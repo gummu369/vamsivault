@@ -20,15 +20,15 @@ if (mobileMenuBtn) {
 
 // Service pricing
 const servicePrices = {
-    'house-cleaning': 49,
-    'laundry': 29,
-    'deep-cleaning': 89,
-    'maintenance': 39,
-    'kitchen': 59,
-    'bathroom': 49,
-    'move-in-out': 99,
-    'post-event': 79,
-    'window': 39
+    'house-cleaning': 200,
+    'laundry': 100,
+    'deep-cleaning': 250,
+    'maintenance': 100,
+    'kitchen': 100,
+    'bathroom': 200,
+    'move-in-out': 200,
+    'post-event': 200,
+    'window': 150
 };
 
 // Check if we're on the booking page
