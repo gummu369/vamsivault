@@ -420,19 +420,6 @@ window.sendWhatsAppMessage = function(formData, bookingRef) {
         'window': 'Window Cleaning'
     };
 
-    // Service pricing
-    const servicePrices = {
-        'house-cleaning': 49,
-        'laundry': 29,
-        'deep-cleaning': 89,
-        'maintenance': 39,
-        'kitchen': 59,
-        'bathroom': 49,
-        'move-in-out': 99,
-        'post-event': 79,
-        'window': 39
-    };
-
     // Create WhatsApp message with booking details
     const serviceName = serviceNames[formData.service] || formData.service;
     const servicePrice = servicePrices[formData.service] || 0;
@@ -504,19 +491,6 @@ window.sendBookingEmail = function(formData, bookingRef) {
         'window': 'Window Cleaning'
     };
 
-    // Service pricing
-    const servicePrices = {
-        'house-cleaning': 49,
-        'laundry': 29,
-        'deep-cleaning': 89,
-        'maintenance': 39,
-        'kitchen': 59,
-        'bathroom': 49,
-        'move-in-out': 99,
-        'post-event': 79,
-        'window': 39
-    };
-
     const serviceName = serviceNames[formData.service] || formData.service;
     const servicePrice = servicePrices[formData.service] || 0;
     const bookingDate = new Date(formData.date).toLocaleDateString('en-IN');
@@ -567,19 +541,6 @@ window.sendAdminNotificationEmail = function(formData, bookingRef) {
         'move-in-out': 'Move-In/Out Cleaning',
         'post-event': 'Post-Event Cleaning',
         'window': 'Window Cleaning'
-    };
-
-    // Service pricing
-    const servicePrices = {
-        'house-cleaning': 49,
-        'laundry': 29,
-        'deep-cleaning': 89,
-        'maintenance': 39,
-        'kitchen': 59,
-        'bathroom': 49,
-        'move-in-out': 99,
-        'post-event': 79,
-        'window': 39
     };
 
     const serviceName = serviceNames[formData.service] || formData.service;
